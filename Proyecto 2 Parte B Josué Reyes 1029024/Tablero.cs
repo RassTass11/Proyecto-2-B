@@ -11,7 +11,7 @@ public class Tablero
    //Metodo para crear una nueva pieza.   
    public void AgregarPieza(int n)
    {
-      Console.WriteLine($"Ingrese el tipo de la pieza #{n}");
+      Console.WriteLine($"Ingrese el tipo de la pieza #{n} (peon, torre, caballo, alfil, rey)"); //solicitamos el tipo de pieza.
       string Tpieza = Console.ReadLine();
 
       int color;
@@ -19,13 +19,13 @@ public class Tablero
       do
       {
 
-         Console.WriteLine($"Ingrese el color de la pieza #{n}");
+         Console.WriteLine($"Ingrese el color de la pieza #{n}"); //solicitamos el color de la pieza.
          Console.WriteLine("1. Blanco");
          Console.WriteLine("2. Negro");
          color = int.Parse(Console.ReadLine());
 
       } while (color == 0);
-
+      // realizamos una asignación del color a una variable char
       switch (color)
       {
          case 1:
@@ -41,11 +41,11 @@ public class Tablero
             break;
       }
 
-      Piezas pieza1 = new Piezas(Tpieza, colorP);
-      AsignarPosición(pieza1);
+      Piezas pieza1 = new Piezas(Tpieza, colorP); //creamos la pieza.
+      AsignarPosición(pieza1); //asignamos su posición.
    }
    //Metodo para verificar si ya hay una dama en el tablero.
-   public bool DamaExiste()
+   public bool DamaExiste() //Validamos que no haya una dama ya creada en el tablero.
    {
       for (int i = 0; i < piezasTab.GetLength(0); i++) //fila
       {
@@ -64,20 +64,20 @@ public class Tablero
    }
 
    //Metodo para crear una nueva dama.
-   public void AgregarDama(bool Dam)
+   public void AgregarDama(bool Dam) //toma como parametro el metodo anterior.
    {
-      if (Dam == false)
+      if (Dam == false) //validación de que no haya una dama ya existente.
       {
          int color;
          char colorP = 'A'; //valor inicializado, se cambiara posteriormente.
          do
          {
-            Console.WriteLine("Ingrese el color de la dama");
+            Console.WriteLine("Ingrese el color de la dama"); //solicitamos el color de la dama.
             Console.WriteLine("1. Blanco");
             Console.WriteLine("2. Negro");
             color = int.Parse(Console.ReadLine());
          } while (color == 0);
-
+         //asignamos el color a una variable char.
          switch (color)
          {
             case 1:
@@ -93,8 +93,9 @@ public class Tablero
                break;
          }
 
-         Dama dama1 = new Dama(colorP);
-         AsignarPosición(dama1);
+         Dama dama1 = new Dama(colorP); //creamos la dama unicamente con el color, porque el tipo de pieza ya esta definido en la clase Dama.
+                                    
+         AsignarPosición(dama1); //asignamos su posición
       }
       else
       {
@@ -111,12 +112,12 @@ public class Tablero
 
       int X = 0;
       Console.WriteLine("Ingrese la posición ");
-      string posi = Console.ReadLine();
+      string posi = Console.ReadLine(); //ingresamos la posición en notación de tablero.
 
       //Se realiza un bucle en la asignación para poder validar las posiciones.
       while (X == 0)
       {
-         string cl = posi[0].ToString();
+         string cl = posi[0].ToString(); //separamos la posición en dos caracteres.
          char fl = posi[1];
 
          int col = 0;
@@ -198,7 +199,7 @@ public class Tablero
                Console.WriteLine("");
                piezasTab[fil, col] = pieza;
                Console.WriteLine($"Pieza agregada exitosamente en {posi},({fil},{col}): {piezasTab[fil, col].Tipo}");
-               X = 1;
+               X = 1; //si la posición esta disponible, asignamos y terminamos el ciclo.
             }
          }
          else
@@ -209,7 +210,7 @@ public class Tablero
          }
       };
    }
-
+   //metodo para asignar posición a la dama.
    public void AsignarPosición(Dama dama)
    {
       int X = 0;
@@ -290,13 +291,13 @@ public class Tablero
          //Validación de que la posición deseada este disponible en el tablero utilizando un ciclo while.
          if ((fil >= 0 && fil < 8) && (col >= 0 && col < 8))
          {
-            if (piezasTab[fil, col] != null)
+            if (piezasTab[fil, col] != null) //si la posición no esta vacia.
             {
                Console.WriteLine("Posición no disponible");
                Console.WriteLine("Ingrese una posición valida");
                posi = Console.ReadLine();
             }
-            else
+            else //si la posición esta vacia y si existe
             {
 
                Console.WriteLine("");
@@ -305,7 +306,7 @@ public class Tablero
                X = 1;
             }
          }
-         else
+         else //si la posición no existe
          {
             Console.WriteLine("Posición inexistente");
             Console.WriteLine("Ingrese una posición valida");
@@ -317,25 +318,26 @@ public class Tablero
    //Metodo para imprimir la matriz
    public void ImprimirMatriz()
    {
+      //recorremos la matriz con dos ciclos for.
       for (int i = 0; i < piezasTab.GetLength(0); i++) //fila
       {
          for (int j = 0; j < piezasTab.GetLength(1); j++) //columna
          {
-            if (piezasTab[i, j] == null)
+            if (piezasTab[i, j] == null) //asignamos a las posiciones vacias un caracter x.
             {
                Console.Write(" ⊠ ");
             }
             else
-            {
-               Console.Write($"{piezasTab[i, j].Tipo[0]}.{piezasTab[i, j].Color}");
+            {  //En las posiciones con alguna pieza que imprima la primera letra de su tipo y su color.
+               Console.Write($"{piezasTab[i, j].Tipo[0]}.{piezasTab[i, j].Color}"); 
             }
          }
          Console.WriteLine();
       }
    }
-
-   public void ImprMovs(int f, int c, char color)
-   {
+   //metodo para imprimir los movimientos disponibles de la dama.
+   public void ImprMovs(int f, int c, char color) //recibe la fila y columna. color guarda el color de la pieza que no es la dama.
+   { //transforma de notación de matriz a tablero. 
       char cl = 'a';
       int fl = 0;
       switch (c)
@@ -394,28 +396,29 @@ public class Tablero
       }
       if ((f >= 0 && f <= 7) && (c >= 0 && c <= 7))
       {
-         if (piezasTab[f, c] != null)
+         if (piezasTab[f, c] != null)  //si la casilla no esta vacia
+                                       // piezasTab[f, c].Color se refiere al color de la dama.
          {
-            if (piezasTab[f, c].Color != color)
+            if (piezasTab[f, c].Color != color) 
             {
 
-               Console.WriteLine($"{cl}{fl}, Disponible");
+               Console.WriteLine($"{cl}{fl}, Disponible"); //si el color es distinto a la dama, esta disponible.
             }
-            if (piezasTab[f, c].Color == color)
+            if (piezasTab[f, c].Color == color) 
             {
-               Console.WriteLine($"{cl}{fl}, {piezasTab[f, c].Tipo}(No Disponible)");
+               Console.WriteLine($"{cl}{fl}, {piezasTab[f, c].Tipo}(No Disponible)"); //si no, no esta disponible
             }
          }
          if (piezasTab[f, c] == null)
          {
-            Console.WriteLine($"{cl}{fl}, Disponible");
+            Console.WriteLine($"{cl}{fl}, Disponible");  //si la casilla esta vacia, esta disponible.
          }
       }
    }
-
+//metodo para realizar los movimientos de la dama
    public void MovimientosDama()
    {
-
+      //recorremos la matriz con dos ciclos for en busca de la dama.
       for (int f = 0; f < piezasTab.GetLength(0); f++)
       {
          for (int c = 0; c < piezasTab.GetLength(1); c++)
@@ -428,16 +431,17 @@ public class Tablero
                   color = piezasTab[f, c].Color; //Obtención del color de la pieza para compararlo con el color de la dama.
                   if (piezasTab[f, c].Tipo == "Dama")
                   {
-                     int f1 = f; //asignación de paramatros para resetear posiciones.
+                     int f1 = f; //asignación de parametros para resetear posiciones.
                      int c1 = c;
                      //Izquierda
                      do
                      {
-                        c--;
-                        ImprMovs(f, c, color);
-                     }while (c >= 1 && f <= 6 && piezasTab[f,c]==null);
-                     f = f1;
-                     c = c1;
+                        c--; //movimiento
+                        ImprMovs(f, c, color); //impresión de movimientos
+                     }while (c >= 1 && f <= 6 && piezasTab[f,c]==null); //condición de que se mantenga en el tablero.  
+                     f = f1;    //reseteo de la posición fila.                                        // y si esta vacia la posición. Si no se detiene el movimiento.
+                     c = c1;    //reseteo de la posición columna.
+
                      //derecha
                      do
                      {
@@ -446,6 +450,7 @@ public class Tablero
                      }while (c <= 6 && f >= 0 && piezasTab[f,c]==null);
                      f = f1;
                      c = c1;
+
                      //arriba
                      do
                      {
@@ -454,6 +459,7 @@ public class Tablero
                      }while (f >= 0 && c <= 6 && piezasTab[f,c]==null);
                      f = f1;
                      c = c1;
+
                      //abajo
                      do
                      {
@@ -462,6 +468,7 @@ public class Tablero
                      }while (f <= 6 && c >= 0 && piezasTab[f,c]==null);
                      f = f1;
                      c = c1;
+
                      //arriba Derecha
                      do
                      {
@@ -471,6 +478,7 @@ public class Tablero
                      }while (f >= 0 && c <= 6 && piezasTab[f,c]==null);
                      f = f1;
                      c = c1;
+
                      //arriba izquierda
                      do
                      {
@@ -480,6 +488,7 @@ public class Tablero
                      }while (f >= 0 && c >= 0 && piezasTab[f,c]==null);
                      f = f1;
                      c = c1;
+
                      //abajo Derecha
                      do
                      {
@@ -489,6 +498,7 @@ public class Tablero
                      }while (f <= 6 && c <= 6 && piezasTab[f,c]==null);
                      f = f1;
                      c = c1;
+
                      //abajo izquierda
                      do
                      {
