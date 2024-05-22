@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "name": "C#: Proyecto 2 Parte B Josué Reyes 1029024",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}\\Proyecto 2 Parte B Josué Reyes 1029024.csproj",
+            "launchConfigurationId": "TargetFramework=;Proyecto 2 Parte B Josué Reyes 1029024"
+        }
+    ]
+}
