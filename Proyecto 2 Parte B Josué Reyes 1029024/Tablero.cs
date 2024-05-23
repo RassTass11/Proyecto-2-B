@@ -402,7 +402,7 @@ public class Tablero
             if (piezasTab[f, c].Color != color) 
             {
 
-               Console.WriteLine($"{cl}{fl}, Disponible"); //si el color es distinto a la dama, esta disponible.
+               Console.WriteLine($"{cl}{fl}, Disponible ({piezasTab[f,c].Tipo})"); //si el color es distinto a la dama, esta disponible.
             }
             if (piezasTab[f, c].Color == color) 
             {
